@@ -49,4 +49,12 @@ const useAuth = () => {
     // リスナーの解除
     return () => authData.subscription.unsubscribe();
   }, []);
+  return {
+    session,
+    error,
+    profileFromGithub,
+    signInWithGithub,
+    signOut,
+  };
 };
+export default useAuth;
