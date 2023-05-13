@@ -1,3 +1,4 @@
+import { log } from "console";
 import supabase, { Database } from "./supabase";
 
 // テーブル名
@@ -6,10 +7,9 @@ export const TABLE_NAME = "chat-app";
 // データの全取得
 export const fetchDatabase = async () => {
   try {
-    const { data } = await supabase
-      .from(TABLE_NAME)
-      .select("*")
-      .order("createdAt");
+    const { data } = await supabase.from(TABLE_NAME).select("*");
+    // TODO: order確認する
+    // .order("createdAt");
     return data;
   } catch (error) {
     console.error(error);

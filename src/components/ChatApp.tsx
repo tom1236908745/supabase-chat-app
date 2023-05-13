@@ -8,17 +8,18 @@ import {
 import { useEffect, useState } from "react";
 import supabase from "@/lib/supabase";
 import Image from "next/image";
+import LogoutButton from "./LogoutButton";
 import useAuth from "@/hooks/useAuth";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 
 const ChatApp = () => {
   const [inputText, setInputText] = useState(""); // 入力テキスト
   const [messageText, setMessageText] = useState<Database[]>([]); // メッセージ
   const { session: isLogin, profileFromGithub } = useAuth();
-  const router = useRouter();
+  // const router = useRouter();
 
   // ログアウト済みの場合はログインページにリダイレクト
-  if (!isLogin) router.push("/");
+  // if (!isLogin) router.push("/");
 
   // リアルタイムデータ更新
   const fetchRealtimeData = () => {
@@ -35,7 +36,6 @@ const ChatApp = () => {
           (payload) => {
             // データ登録
             if (payload.eventType === "INSERT") {
-              console.log("payload: ", payload);
               const { createdAt, id, message, avatarUrl, nickName } =
                 payload.new;
               // TODO: ここから
@@ -96,12 +96,7 @@ const ChatApp = () => {
                     height={80}
                   />
                 ) : (
-                  <Image
-                    src="/noimage.png"
-                    alt="no image"
-                    width={80}
-                    height={80}
-                  />
+                  <div>画像なし</div>
                 )}
                 <p>{item.nickName ? item.nickName : "名無し"}</p>
               </a>
@@ -123,6 +118,7 @@ const ChatApp = () => {
           送信
         </button>
       </form>
+      <LogoutButton />
     </div>
   );
 };
