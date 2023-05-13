@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import supabase from "@/lib/supabase";
 import Image from "next/image";
 import useAuth from "@/hooks/useAuth";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 const ChatApp = () => {
   const [inputText, setInputText] = useState(""); // 入力テキスト
@@ -38,6 +38,7 @@ const ChatApp = () => {
               console.log("payload: ", payload);
               const { createdAt, id, message, avatarUrl, nickName } =
                 payload.new;
+              // TODO: ここから
               setMessageText((messageText) => [
                 ...messageText,
                 { createdAt, id, message, avatarUrl, nickName },
@@ -77,37 +78,38 @@ const ChatApp = () => {
 
   return (
     <div>
-      {messageText.map((item) => (
-        <div key={item.id} data-user-id={item.nickName}>
-          <div>
-            <a
-              href={`https://github.com/${item.nickName}`}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              {item.avatarUrl ? (
-                <Image
-                  src={item.avatarUrl}
-                  alt="アイコン"
-                  width={80}
-                  height={80}
-                />
-              ) : (
-                <Image
-                  src="/noimage.png"
-                  alt="no image"
-                  width={80}
-                  height={80}
-                />
-              )}
-              <p>{item.nickName ? item.nickName : "名無し"}</p>
-            </a>
-            <p>{item.createdAt}</p>
+      {messageText &&
+        messageText.map((item) => (
+          <div key={item.id} data-user-id={item.nickName}>
+            <div>
+              <a
+                href={`https://github.com/${item.nickName}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                {item.avatarUrl ? (
+                  <Image
+                    src={item.avatarUrl}
+                    alt="アイコン"
+                    width={80}
+                    height={80}
+                  />
+                ) : (
+                  <Image
+                    src="/noimage.png"
+                    alt="no image"
+                    width={80}
+                    height={80}
+                  />
+                )}
+                <p>{item.nickName ? item.nickName : "名無し"}</p>
+              </a>
+              <p>{item.createdAt}</p>
+            </div>
+            <p>{item.message}</p>
           </div>
-          <p>{item.message}</p>
-        </div>
-      ))}
+        ))}
 
       <form onSubmit={onSubmitNewMessage}>
         <input
