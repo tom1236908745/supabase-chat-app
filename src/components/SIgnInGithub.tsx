@@ -6,7 +6,9 @@ const SignInGithub = () => {
 
   return (
     <div>
-      <button onClick={signInWithGithub}>Githubでサインインする</button>
+      <button className="rounded-full bg-yellow-200" onClick={signInWithGithub}>
+        Githubでサインインする
+      </button>
       {error && <p>{error}</p>}
     </div>
   );

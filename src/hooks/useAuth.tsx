@@ -13,12 +13,10 @@ const useAuth = () => {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: "github",
       });
-      console.log("koko");
       if (error) {
         setError(error.message);
       }
     } catch (error) {
-      console.log("koko2");
       if (error instanceof Error) {
         setError(error.message);
       } else if (typeof error === "string") {
