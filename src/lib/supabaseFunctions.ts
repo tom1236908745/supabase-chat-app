@@ -4,7 +4,9 @@ import supabase, { Database } from "./supabase";
 // テーブル名
 export const TABLE_NAME = "chat-app";
 
-// データの全取得
+/**
+ * supabaseからデータを取得
+ */
 export const fetchDatabase = async () => {
   try {
     const { data } = await supabase.from(TABLE_NAME).select("*");
@@ -18,7 +20,12 @@ export const fetchDatabase = async () => {
 
 type InsertProps = Pick<Database, "message" | "nickName" | "avatarUrl">;
 
-// データの追加
+/**
+ * データベースに必要なデータを追加する関数
+ * @param {string} message
+ * @param {string} avatarUrl
+ * @param {string} nickName
+ */
 export const addSupabaseData = async ({
   message,
   avatarUrl,
